@@ -9,6 +9,6 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: #jdbc:postgresql://host:port/database-name
+    url: #jdbc:postgresql://host:5432/cnat-user-service-db
     username: #username
     password: #password
