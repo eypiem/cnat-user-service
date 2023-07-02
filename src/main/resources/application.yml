@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  #  sql:
+  #    init:
+  #      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: #jdbc:postgresql://host:port/database-name
+    username: #username
+    password: #password
