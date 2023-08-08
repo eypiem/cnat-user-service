@@ -1,10 +1,12 @@
-package dev.apma.cnat;
+package dev.apma.cnat.userservice.controller;
 
 
-import dev.apma.cnat.Response.GenericResponse;
-import dev.apma.cnat.Response.UserRegisterResponse;
-import dev.apma.cnat.service.UserService;
-import dev.apma.cnat.web.error.UserAlreadyExistException;
+import dev.apma.cnat.userservice.error.UserAlreadyExistException;
+import dev.apma.cnat.userservice.model.User;
+import dev.apma.cnat.userservice.model.UserRepository;
+import dev.apma.cnat.userservice.response.GenericResponse;
+import dev.apma.cnat.userservice.service.UserService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,23 +31,23 @@ public class MainController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public UserRegisterResponse registerUser(@RequestBody User req) {
+    public GenericResponse registerUser(@Valid @RequestBody User req) {
         LOGGER.info("/register {}", req);
         req.setPassword(passwordEncoder.encode(req.getPassword()));
         /// TODO: Verify email to enable account
         req.setEnabled(true);
         try {
             userService.registerNewUser(req);
-            return new UserRegisterResponse("User registered");
-        } catch (UserAlreadyExistException uaeEx) {
+            return new GenericResponse("User registered");
+        } catch (UserAlreadyExistException e) {
             LOGGER.error("An account for that email already exists");
             throw new ResponseStatusException(HttpStatus.CONFLICT, "An account for that email already exists");
         }
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/auth")
     public GenericResponse authenticate(@RequestBody User req) {
-        LOGGER.info("/authenticate {}", req);
+        LOGGER.info("/auth {}", req);
         User user = userRepo.findByEmail(req.getEmail());
         if (user != null && passwordEncoder.matches(req.getPassword(), user.getPassword()) && user.isEnabled()) {
             return new GenericResponse("OK");

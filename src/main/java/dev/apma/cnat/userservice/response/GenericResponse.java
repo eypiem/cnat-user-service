@@ -1,4 +1,4 @@
-package dev.apma.cnat.Response;
+package dev.apma.cnat.userservice.response;
 
 
 public record GenericResponse(String message) {

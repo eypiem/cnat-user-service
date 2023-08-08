@@ -1,4 +1,4 @@
-package dev.apma.cnat.web.error;
+package dev.apma.cnat.userservice.error;
 
 
 import java.io.Serial;

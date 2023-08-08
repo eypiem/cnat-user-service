@@ -1,9 +1,9 @@
-package dev.apma.cnat.service;
+package dev.apma.cnat.userservice.service;
 
 
-import dev.apma.cnat.User;
-import dev.apma.cnat.UserRepository;
-import dev.apma.cnat.web.error.UserAlreadyExistException;
+import dev.apma.cnat.userservice.error.UserAlreadyExistException;
+import dev.apma.cnat.userservice.model.User;
+import dev.apma.cnat.userservice.model.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

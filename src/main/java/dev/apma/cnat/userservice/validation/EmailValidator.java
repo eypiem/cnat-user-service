@@ -1,4 +1,4 @@
-package dev.apma.cnat.validation;
+package dev.apma.cnat.userservice.validation;
 
 
 import jakarta.validation.ConstraintValidator;

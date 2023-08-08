@@ -1,4 +1,4 @@
-package dev.apma.cnat;
+package dev.apma.cnat.userservice;
 
 
 import org.springframework.boot.SpringApplication;
