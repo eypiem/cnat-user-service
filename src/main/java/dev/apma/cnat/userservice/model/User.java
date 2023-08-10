@@ -1,8 +1,8 @@
 package dev.apma.cnat.userservice.model;
 
 
-import dev.apma.cnat.userservice.validation.ValidEmail;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
 @Entity // This tells Hibernate to make a table out of this class
@@ -12,8 +12,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ValidEmail
-    @Column(nullable = false, unique = true, length = 45)
+    /**
+     * @see
+     * <a href="https://owasp.org/www-community/OWASP_Validation_Regex_Repository">OWASP Validation Regex Repository</a>
+     */
+    @Email(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$", message =
+            "Email is not valid")
+    @Column(nullable = false, unique = true, length = 254)
     private String email;
 
     @Size(min = 8, max = 64, message = "Password should be between 8 and 64 characters")
