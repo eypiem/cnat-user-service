@@ -14,3 +14,10 @@ spring:
     url: ${CNAT_USER_SERVICE_POSTGRES_URI}
     username: ${CNAT_USER_SERVICE_POSTGRES_USERNAME}
     password: ${CNAT_USER_SERVICE_POSTGRES_PASSWORD}
+
+management:
+  endpoint:
+    health:
+      #show-details: always
+      probes:
+        enabled: true
