@@ -2,16 +2,16 @@ package dev.apma.cnat.userservice.controller;
 
 
 import dev.apma.cnat.userservice.error.UserAlreadyExistException;
-import dev.apma.cnat.userservice.model.User;
-import dev.apma.cnat.userservice.model.UserRepository;
-import dev.apma.cnat.userservice.response.GenericResponse;
+import dev.apma.cnat.userservice.requests.UserAuthRequest;
+import dev.apma.cnat.userservice.requests.UserDeleteRequest;
+import dev.apma.cnat.userservice.requests.UserRegisterRequest;
 import dev.apma.cnat.userservice.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,24 +21,18 @@ import org.springframework.web.server.ResponseStatusException;
 public class MainController {
     private final static Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
-    @Autowired
-    private UserRepository userRepo;
+    private final UserService userSvc;
 
     @Autowired
-    private UserService userService;
+    public MainController(UserService userSvc) {
+        this.userSvc = userSvc;
+    }
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @PostMapping("/register")
-    public GenericResponse registerUser(@Valid @RequestBody User req) {
-        LOGGER.info("/register {}", req);
-        req.setPassword(passwordEncoder.encode(req.getPassword()));
-        /// TODO: Verify email to enable account
-        req.setEnabled(true);
+    @PostMapping("")
+    public void register(@Valid @RequestBody UserRegisterRequest req) {
+        LOGGER.info("post / {}", req);
         try {
-            userService.registerNewUser(req);
-            return new GenericResponse("User registered");
+            userSvc.register(req);
         } catch (UserAlreadyExistException e) {
             LOGGER.error("An account for that email already exists");
             throw new ResponseStatusException(HttpStatus.CONFLICT, "An account for that email already exists");
@@ -46,12 +40,19 @@ public class MainController {
     }
 
     @PostMapping("/auth")
-    public GenericResponse authenticate(@RequestBody User req) {
-        LOGGER.info("/auth {}", req);
-        User user = userRepo.findByEmail(req.getEmail());
-        if (user != null && passwordEncoder.matches(req.getPassword(), user.getPassword()) && user.isEnabled()) {
-            return new GenericResponse("OK");
+    public void authenticate(@Valid @RequestBody UserAuthRequest req) {
+        LOGGER.info("post /auth {}", req);
+        if (!userSvc.authenticate(req)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication fail");
         }
-        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication fail");
+    }
+
+    @DeleteMapping("")
+    public void delete(@Valid @RequestBody UserDeleteRequest req) {
+        LOGGER.info("delete / {}", req);
+        if (!userSvc.authenticate(new UserAuthRequest(req.email(), req.password()))) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication fail");
+        }
+        userSvc.delete(req);
     }
 }

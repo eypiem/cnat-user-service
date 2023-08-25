@@ -17,7 +17,7 @@ public class User {
      * <a href="https://owasp.org/www-community/OWASP_Validation_Regex_Repository">OWASP Validation Regex Repository</a>
      */
     @Email(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$", message =
-            "Email is not valid")
+            "Email format is not valid")
     @Column(nullable = false, unique = true, length = 254)
     private String email;
 
@@ -35,6 +35,18 @@ public class User {
 
     @Column(nullable = false)
     private boolean enabled;
+
+    public User(String email, String password, String firstName, String lastName, boolean enabled) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.enabled = enabled;
+    }
+
+    public User() {
+
+    }
 
     public Long getId() {
         return id;

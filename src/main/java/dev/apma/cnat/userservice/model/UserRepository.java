@@ -3,10 +3,11 @@ package dev.apma.cnat.userservice.model;
 
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
 
-// This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
-// CRUD refers Create, Read, Update, Delete
 
 public interface UserRepository extends CrudRepository<User, Integer> {
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
+
+    void deleteByEmail(String email);
 }
