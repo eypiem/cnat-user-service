@@ -1,4 +1,4 @@
-package dev.apma.cnat.userservice.requests;
+package dev.apma.cnat.userservice.request;
 
 
 import jakarta.validation.constraints.Email;
