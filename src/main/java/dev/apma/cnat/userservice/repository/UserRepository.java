@@ -1,6 +1,7 @@
-package dev.apma.cnat.userservice.model;
+package dev.apma.cnat.userservice.repository;
 
 
+import dev.apma.cnat.userservice.model.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

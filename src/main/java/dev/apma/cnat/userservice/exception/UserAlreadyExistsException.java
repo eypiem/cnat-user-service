@@ -18,5 +18,4 @@ public final class UserAlreadyExistsException extends Exception {
     public UserAlreadyExistsException(Throwable cause) {
         super(cause);
     }
-
 }

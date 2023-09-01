@@ -18,5 +18,4 @@ public final class UserAuthenticationFailException extends Exception {
     public UserAuthenticationFailException(Throwable cause) {
         super(cause);
     }
-
 }

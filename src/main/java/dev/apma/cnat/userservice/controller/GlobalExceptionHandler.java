@@ -4,6 +4,7 @@ package dev.apma.cnat.userservice.controller;
 import dev.apma.cnat.userservice.dto.ValidationErrorsDTO;
 import dev.apma.cnat.userservice.exception.UserAlreadyExistsException;
 import dev.apma.cnat.userservice.exception.UserAuthenticationFailException;
+import dev.apma.cnat.userservice.exception.UserDoesNotExistException;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {UserAlreadyExistsException.class})
     protected ResponseEntity<Object> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+
+    @ExceptionHandler(value = {UserDoesNotExistException.class})
+    protected ResponseEntity<Object> handleUserDoesNotExistException(UserDoesNotExistException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = {UserAuthenticationFailException.class})
