@@ -17,13 +17,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * An implementation of the {@code UserService} interface.
+ *
+ * @author Amir Parsa Mahdian
+ * @see dev.apma.cnat.userservice.service.UserService
+ */
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
     private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    /**
+     * The user repository
+     */
     private final UserRepository userRepo;
 
+    /**
+     * The {@code PasswordEncoder} used to encrypt and validate passwords
+     */
     private final PasswordEncoder passwordEncoder;
 
     @Autowired

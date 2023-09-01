@@ -1,6 +1,11 @@
 package dev.apma.cnat.userservice.exception;
 
 
+/**
+ * This {@code Exception} indicates a situation where a user with the requested email already exists.
+ *
+ * @author Amir Parsa Mahdian
+ */
 public final class UserAlreadyExistsException extends Exception {
 
     public UserAlreadyExistsException() {

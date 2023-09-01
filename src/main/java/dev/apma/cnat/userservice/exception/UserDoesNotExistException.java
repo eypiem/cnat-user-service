@@ -1,6 +1,11 @@
 package dev.apma.cnat.userservice.exception;
 
 
+/**
+ * This {@code Exception} indicates a situation where a requested user does not exist.
+ *
+ * @author Amir Parsa Mahdian
+ */
 public final class UserDoesNotExistException extends Exception {
 
     public UserDoesNotExistException() {

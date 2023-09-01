@@ -11,7 +11,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-
+/**
+ * This class configures the security rules enforced on REST API endpoints and the password encoder.
+ *
+ * @author Amir Parsa Mahdian
+ */
 @Configuration
 @EnableWebSecurity
 public class AppSecurity {

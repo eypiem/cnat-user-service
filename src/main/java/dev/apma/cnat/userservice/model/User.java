@@ -5,7 +5,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
-@Entity // This tells Hibernate to make a table out of this class
+/**
+ * This class defines the user model and enables Hibernate to create the <i>users</i> database table for this model.
+ *
+ * @author Amir Parsa Mahdian
+ */
+@Entity
 @Table(name = "users")
 public class User {
     @Id
@@ -45,7 +50,6 @@ public class User {
     }
 
     public User() {
-
     }
 
     public Long getId() {

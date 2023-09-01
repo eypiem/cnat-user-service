@@ -15,6 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * This class is a controller for all the REST API endpoints.
+ *
+ * @author Amir Parsa Mahdian
+ */
 @RestController
 public class MainController {
     private final static Logger LOGGER = LoggerFactory.getLogger(MainController.class);

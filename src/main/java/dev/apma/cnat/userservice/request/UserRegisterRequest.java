@@ -4,6 +4,11 @@ package dev.apma.cnat.userservice.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
+/**
+ * This request class defines the body for a <i>user register</i> request.
+ *
+ * @author Amir Parsa Mahdian
+ */
 public record UserRegisterRequest(@Email(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)"
                                                   + "+[a-zA-Z]{2,}$", message = "Email format is not valid") String email,
                                   @Size(min = 8, max = 64,
