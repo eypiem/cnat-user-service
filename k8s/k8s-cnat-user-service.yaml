@@ -1,0 +1,79 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cnat-user-service-svc
+  namespace: cnat
+spec:
+  selector:
+    app: cnat-user-service
+  ports:
+    - port: 30082
+      targetPort: 80
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cnat-user-service-deploy
+  namespace: cnat
+  labels:
+    app: cnat-user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cnat-user-service
+  template:
+    metadata:
+      labels:
+        app: cnat-user-service
+    spec:
+      containers:
+        - name: some-cnat-user-service
+          image: cnat-user-service
+          env:
+            - name: CNAT_USER_SERVICE_POSTGRES_URI
+              valueFrom:
+                secretKeyRef:
+                  name: cnat-secrets
+                  key: postgres_uri
+            - name: CNAT_USER_SERVICE_POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: cnat-secrets
+                  key: postgres_username
+            - name: CNAT_USER_SERVICE_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cnat-secrets
+                  key: postgres_password
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health/liveness
+              port: 80
+          readinessProbe:
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health/readiness
+              port: 80
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 1000m
+              ephemeral-storage: 1Gi
+            limits:
+              memory: 512Mi
+              cpu: 1000m
+              ephemeral-storage: 1Gi
