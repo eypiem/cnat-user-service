@@ -9,7 +9,7 @@ build:
     - image: cnat-user-service-test
       context: ./
       custom:
-        buildCommand: docker build --target test
+        buildCommand: docker build . --target test
 test:
   - image: cnat-user-service-test
     custom:
