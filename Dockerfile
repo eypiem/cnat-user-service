@@ -6,7 +6,7 @@ RUN mvn clean package -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 FROM base as test
-CMD mvn test
+RUN mvn test
 
 FROM eclipse-temurin:17-jre-alpine
 VOLUME /tmp
