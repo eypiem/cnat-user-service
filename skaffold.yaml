@@ -8,13 +8,12 @@ build:
       context: ./
     - image: cnat-user-service-test
       context: ./
-      docker:
-        buildArgs:
-          --target: test
+      custom:
+        buildCommand: docker build --target test
 test:
   - image: cnat-user-service-test
     custom:
-      - command: echo $IMAGE && docker run --rm $IMAGE
+      - command: docker run --rm $IMAGE
 deploy:
   kubectl:
     manifests:
