@@ -6,6 +6,15 @@ build:
   artifacts:
     - image: cnat-user-service
       context: ./
+    - image: cnat-user-service-test
+      context: ./
+      docker:
+        buildArgs:
+          target: test
+test:
+  - image: cnat-user-service-test
+    custom:
+      - command: docker run --rm $IMAGE
 deploy:
   kubectl:
     manifests:
