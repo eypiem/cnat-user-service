@@ -10,11 +10,11 @@ build:
       context: ./
       docker:
         buildArgs:
-          target: test
+          --target: test
 test:
   - image: cnat-user-service-test
     custom:
-      - command: docker run --rm $IMAGE
+      - command: echo $IMAGE && docker run --rm $IMAGE
 deploy:
   kubectl:
     manifests:
